@@ -1,7 +1,7 @@
 '''This File holds the configuration for the Maze Search'''
 
 
-MAZE_FILE = "Mazes/Faisal_maze.txt"
+MAZE_FILE = "../Mazes/Faisal_maze.txt"
 OPPONENT = "O"
 OBSTACLE = "*"
 GAME_SPEED = 100
