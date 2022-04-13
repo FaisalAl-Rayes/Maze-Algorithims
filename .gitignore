@@ -1,5 +1,2 @@
-Maze_GUI/__pycache__/Base.cpython-310.pyc
-Maze_GUI/Maze_Search_GUI.py
-Maze_GUI/__pycache__/Configuration.cpython-310.pyc
-Maze_GUI/__pycache__/Data_Structures.cpython-310.pyc
-Maze_GUI/__pycache__/Search_Algorithms.cpython-310.pyc
+Maze_GUI/__pycache__/
+venv/

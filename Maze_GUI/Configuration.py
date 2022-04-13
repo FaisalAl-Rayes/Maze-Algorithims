@@ -2,7 +2,7 @@
 
 
 MAZE_FILE = "../Mazes/Faisal_maze.txt"
-OPPONENT = "O"
+BOT = "B"
 OBSTACLE = "*"
 GAME_SPEED = 100
 WIDTH = 1200

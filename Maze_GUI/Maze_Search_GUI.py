@@ -11,12 +11,12 @@ from playsound import playsound
 
 class Maze_Search_GUI:
 
-    def __init__(self, maze_grid, maze_dimensions, maze_obstacles, searcher_start_pos) -> None:
+    def __init__(self, maze_grid, maze_dimensions, maze_obstacles, bot_start_pos) -> None:
         self.maze_grid = maze_grid
         self.maze_dimensions = maze_dimensions
         self.maze_obstacles = maze_obstacles
-        self.searcher_start_pos = self.searcher_pos = searcher_start_pos
-        self.searcher_path = None
+        self.bot_start_pos = self.bot_pos = bot_start_pos
+        self.bot_path = None
         self.doing_path = False
         self.show_path = True
         self.treasure_pos = (0, 0)
@@ -50,12 +50,12 @@ class Maze_Search_GUI:
         self.builder.hideturtle()
         self.builder.penup()
 
-        # searcher.
-        self.searcher = turtle.Turtle()
-        self.searcher.shape('circle')
-        self.searcher.color('black')
-        self.searcher.shapesize(18 / 20)
-        self.searcher.penup()
+        # bot.
+        self.bot = turtle.Turtle()
+        self.bot.shape('circle')
+        self.bot.color('black')
+        self.bot.shapesize(18 / 20)
+        self.bot.penup()
 
         # Treasure.
         self.treasure = turtle.Turtle()
@@ -76,15 +76,15 @@ class Maze_Search_GUI:
 
     def reset(self):
         # Stop any movement and clear the trail.
-        self.searcher.clearstamps()
-        self.searcher_path = None
+        self.bot.clearstamps()
+        self.bot_path = None
         self.stop_doing_path()
 
         # Position/show game objects.
-        self.searcher_pos = self.searcher_start_pos
+        self.bot_pos = self.bot_start_pos
         self.treasure.hideturtle()
         self.treasure_set = False
-        self.draw_piece(self.searcher, self.searcher_start_pos)
+        self.draw_piece(self.bot, self.bot_start_pos)
 
         # Start game.
         self.path_started = False
@@ -221,16 +221,16 @@ class Maze_Search_GUI:
     def do_algorithm(self):
         if self.treasure_set:  # Can't find path to null position.
             if self.algorithm == 'dfs':
-                self.searcher_path = Search_Algorithms.dfs(self.maze_grid, self.searcher_start_pos, 
+                self.bot_path = Search_Algorithms.dfs(self.maze_grid, self.bot_start_pos, 
                                                            self.treasure_pos)
             elif self.algorithm == 'bfs':
-                self.searcher_path = Search_Algorithms.bfs(self.maze_grid, self.searcher_start_pos, 
+                self.bot_path = Search_Algorithms.bfs(self.maze_grid, self.bot_start_pos, 
                                                            self.treasure_pos)
             elif self.algorithm == 'a_star':
-                self.searcher_path = Search_Algorithms.a_star(self.maze_grid, self.searcher_start_pos, 
+                self.bot_path = Search_Algorithms.a_star(self.maze_grid, self.bot_start_pos, 
                                                               self.treasure_pos)
             #Path found.
-            if self.searcher_path is not None:
+            if self.bot_path is not None:
                 self.path_started = True
                 self.screen.onkey(None, 's')
                 self.start_or_continue_path()
@@ -247,17 +247,17 @@ class Maze_Search_GUI:
     def animation_loop(self):
         if self.doing_path:
             try:
-                next_pos = self.searcher_path.pop(0)
+                next_pos = self.bot_path.pop(0)
             except IndexError:
                 return 
-            self.draw_piece(self.searcher, next_pos, self.show_path)
+            self.draw_piece(self.bot, next_pos, self.show_path)
             if next_pos == self.treasure_pos:
                 playsound('sounds/treasure_found.mp3', False)
             self.screen.update()
             turtle.ontimer(self.animation_loop, Configuration.GAME_SPEED)
 
 if __name__ == '__main__':
-    maze_grid, maze_dimensions, maze_obstacles, searcher_start_pos = Base.read_maze(
+    maze_grid, maze_dimensions, maze_obstacles, bot_start_pos = Base.read_maze(
         Configuration.MAZE_FILE)
-    Maze_Search_GUI(maze_grid, maze_dimensions, maze_obstacles, searcher_start_pos)
+    Maze_Search_GUI(maze_grid, maze_dimensions, maze_obstacles, bot_start_pos)
     turtle.done()

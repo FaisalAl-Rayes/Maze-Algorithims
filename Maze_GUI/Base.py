@@ -17,11 +17,11 @@ def read_maze(filepath) -> list:
                 for j in range(col_num):
                     if maze[i][j] == Configuration.OBSTACLE:
                         maze_obstacles.append((i, j))
-                    elif maze[i][j] == Configuration.OPPONENT:
-                        opponent_start_pos = (i, j)
-            return maze, (row_num, col_num), maze_obstacles, opponent_start_pos
+                    elif maze[i][j] == Configuration.BOT:
+                        bot_start_pos = (i, j)
+            return maze, (row_num, col_num), maze_obstacles, bot_start_pos
     except UnboundLocalError:
-        print("The maze needs a player and an opponent.")
+        print("The maze needs a player and an bot.")
         raise SystemExit
     except OSError:
         print("There is a problem with the file!")
